@@ -19,7 +19,8 @@ const styles = theme => ({
   },
   smurf: {
     margin: "0 auto",
-    textAlign: "center"
+    textAlign: "center",
+    marginTop: "5%"
   }
 });
 class Smurfs extends Component {
