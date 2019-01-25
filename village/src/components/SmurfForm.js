@@ -1,57 +1,87 @@
-import React, { Component } from 'react';
+import React from "react";
+import { withStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 
-class SmurfForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: '',
-      age: '',
-      height: ''
-    };
+const styles = theme => ({
+  container: {
+    display: "flex",
+    flexWrap: "wrap"
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 200
+  },
+  dense: {
+    marginTop: 19
+  },
+  menu: {
+    width: 200
+  },
+  button: {
+    margin: theme.spacing.unit
+  },
+  smurf: {
+    margin: "0 auto",
+    textAlign: "center",
+    marginTop: "15%"
   }
+});
 
-  addSmurf = event => {
-    event.preventDefault();
-    // add code to create the smurf using the api
-
-    this.setState({
-      name: '',
-      age: '',
-      height: ''
-    });
-  }
-
-  handleInputChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+const SmurfForm = props => {
+  const { classes } = props;
+  const handleSubmit = e => {
+    e.preventDefault();
+    if (props.isUpdating) {
+      props.updateSmurf();
+    } else {
+      props.addSmurf(e);
+    }
   };
 
-  render() {
-    return (
-      <div className="SmurfForm">
-        <form onSubmit={this.addSmurf}>
-          <input
-            onChange={this.handleInputChange}
-            placeholder="name"
-            value={this.state.name}
-            name="name"
-          />
-          <input
-            onChange={this.handleInputChange}
-            placeholder="age"
-            value={this.state.age}
-            name="age"
-          />
-          <input
-            onChange={this.handleInputChange}
-            placeholder="height"
-            value={this.state.height}
-            name="height"
-          />
-          <button type="submit">Add to the village</button>
-        </form>
-      </div>
-    );
-  }
-}
+  return (
+    <div className={classes.smurf}>
+      <form onSubmit={handleSubmit}>
+        <TextField
+          id="standard-name"
+          label="Name"
+          className={classes.textField}
+          margin="normal"
+          onChange={props.handleInputChange}
+          value={props.state.name}
+          name="name"
+        />
+        <TextField
+          id="standard-name"
+          label="Age"
+          className={classes.textField}
+          margin="normal"
+          onChange={props.handleInputChange}
+          value={props.state.age}
+          name="age"
+        />
+        <TextField
+          id="standard-name"
+          label="Height"
+          className={classes.textField}
+          margin="normal"
+          onChange={props.handleInputChange}
+          value={props.state.height}
+          name="height"
+        />
 
-export default SmurfForm;
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          className={classes.button}
+        >
+          {props.isUpdating ? "Update Smurf" : "Add to the Village"}
+        </Button>
+      </form>
+    </div>
+  );
+};
+
+export default withStyles(styles)(SmurfForm);
